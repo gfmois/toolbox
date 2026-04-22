@@ -44,6 +44,39 @@ toolbox --version
 toolbox help
 ```
 
+### Quick install scripts
+
+From this repository:
+
+**Install latest**
+
+```bash
+# Linux / macOS
+curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash
+```
+
+```powershell
+# Windows (PowerShell)
+iwr -useb https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1 | iex
+```
+
+**Update installed Toolbox to latest**
+
+```bash
+# Linux / macOS
+curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash -s -- --update
+```
+
+```powershell
+# Windows (PowerShell)
+& ([ScriptBlock]::Create((iwr -useb https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) -Update
+```
+
+Optional install flags:
+
+- Linux/macOS: `curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash -s -- --version vX.Y.Z --install-dir /custom/bin`
+- Windows: `& ([ScriptBlock]::Create((iwr -useb https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) -Version vX.Y.Z -InstallDir C:\tools\bin -AddToPath`
+
 ---
 
 ## Why teams use Toolbox
