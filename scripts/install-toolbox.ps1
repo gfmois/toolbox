@@ -42,11 +42,19 @@ function Fail([string]$Message) {
 }
 
 function Get-Arch {
-    $arch = [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture.ToString().ToLowerInvariant()
+    $procArch = $env:PROCESSOR_ARCHITECTURE
+    $procArchW6432 = $env:PROCESSOR_ARCHITEW6432
 
-    switch ($arch) {
-        "x64"   { return "amd64" }
-        "arm64" { return "arm64" }
+    $arch = if (-not [string]::IsNullOrWhiteSpace($procArchW6432)) {
+        $procArchW6432
+    } else {
+        $procArch
+    }
+
+    switch (($arch ?? "").ToUpperInvariant()) {
+        "AMD64" { return "amd64" }
+        "X86"   { return "amd64" } # PowerShell x86 sobre Windows x64
+        "ARM64" { return "arm64" }
         default { Fail "Unsupported architecture: $arch" }
     }
 }
