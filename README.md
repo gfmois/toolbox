@@ -79,7 +79,7 @@ curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install
 #### Windows (PowerShell)
 
 ```powershell
-& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) --update
+& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) -Update
 ```
 
 ---
@@ -95,7 +95,7 @@ curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install
 #### Windows (PowerShell)
 
 ```powershell
-& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) --uninstall
+& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) -Uninstall
 ```
 
 ---

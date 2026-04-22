@@ -47,13 +47,15 @@ function Get-Arch {
 
     $arch = if (-not [string]::IsNullOrWhiteSpace($procArchW6432)) {
         $procArchW6432
-    } else {
+    } elseif (-not [string]::IsNullOrWhiteSpace($procArch)) {
         $procArch
+    } else {
+        ""
     }
 
-    switch (($arch ?? "").ToUpperInvariant()) {
+    switch ($arch.ToUpperInvariant()) {
         "AMD64" { return "amd64" }
-        "X86"   { return "amd64" } # PowerShell x86 sobre Windows x64
+        "X86"   { return "amd64" }
         "ARM64" { return "arm64" }
         default { Fail "Unsupported architecture: $arch" }
     }
@@ -111,7 +113,7 @@ function Find-InstalledToolbox {
     }
 
     $userLocalBin = Join-Path $HOME ".local\bin\toolbox.exe"
-    $userBin      = Join-Path $HOME "bin\toolbox.exe"
+    $userBin = Join-Path $HOME "bin\toolbox.exe"
 
     $candidates.Add($userLocalBin)
     $candidates.Add($userBin)
