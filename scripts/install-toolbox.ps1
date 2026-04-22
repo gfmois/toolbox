@@ -47,9 +47,11 @@ function Get-Arch {
 
     $arch = if (-not [string]::IsNullOrWhiteSpace($procArchW6432)) {
         $procArchW6432
-    } elseif (-not [string]::IsNullOrWhiteSpace($procArch)) {
+    }
+    elseif (-not [string]::IsNullOrWhiteSpace($procArch)) {
         $procArch
-    } else {
+    }
+    else {
         ""
     }
 
@@ -98,25 +100,19 @@ function Find-InstalledToolbox {
     catch {
     }
 
-    $whereExe = Get-Command where.exe -ErrorAction SilentlyContinue
-    if ($whereExe) {
-        try {
-            $whereResults = & where.exe toolbox 2>$null
-            foreach ($result in $whereResults) {
-                if (-not [string]::IsNullOrWhiteSpace($result)) {
-                    $candidates.Add($result.Trim())
-                }
+    try {
+        $whereResults = & where.exe toolbox 2>$null
+        foreach ($result in $whereResults) {
+            if (-not [string]::IsNullOrWhiteSpace($result)) {
+                $candidates.Add($result.Trim())
             }
         }
-        catch {
-        }
+    }
+    catch {
     }
 
-    $userLocalBin = Join-Path $HOME ".local\bin\toolbox.exe"
-    $userBin = Join-Path $HOME "bin\toolbox.exe"
-
-    $candidates.Add($userLocalBin)
-    $candidates.Add($userBin)
+    $candidates.Add((Join-Path $HOME ".local\bin\toolbox.exe"))
+    $candidates.Add((Join-Path $HOME "bin\toolbox.exe"))
 
     foreach ($candidate in ($candidates | Select-Object -Unique)) {
         if (-not [string]::IsNullOrWhiteSpace($candidate) -and (Test-Path -LiteralPath $candidate -PathType Leaf)) {
