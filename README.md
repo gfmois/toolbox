@@ -14,13 +14,15 @@ It gives you:
 
 ---
 
-## Install (binary release)
+## Install
+
+### Binary releases
 
 Download the latest release from:
 
 **https://github.com/gfmois/toolbox/releases/latest**
 
-Choose your platform asset:
+Available assets:
 
 - `toolbox_vX.Y.Z_linux_amd64.tar.gz`
 - `toolbox_vX.Y.Z_linux_arm64.tar.gz`
@@ -28,54 +30,105 @@ Choose your platform asset:
 - `toolbox_vX.Y.Z_darwin_arm64.tar.gz`
 - `toolbox_vX.Y.Z_windows_amd64.zip`
 
-Each archive contains:
+Also included:
 
-- `bin/toolbox` (Linux/macOS)
-- `bin/toolbox.exe` (Windows)
+- `SHA256SUMS.txt`
 
-Also available:
+Archive contents:
 
-- `SHA256SUMS.txt` for checksum verification
+- Linux/macOS: `bin/toolbox`
+- Windows: `bin/toolbox.exe`
 
-Put the binary on your `PATH`, then run:
+If you install manually, place the binary somewhere on your `PATH`, then run:
 
 ```bash
 toolbox --version
 toolbox help
 ```
 
-### Quick install scripts
+---
 
-From this repository:
+## Quick install scripts
 
-**Install latest**
+Toolbox provides install scripts for Linux, macOS, and Windows.
+
+### Install latest version
+
+#### Linux / macOS
 
 ```bash
-# Linux / macOS
 curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash
 ```
 
+#### Windows (PowerShell)
+
 ```powershell
-# Windows (PowerShell)
-iwr -useb https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1 | iex
+& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content))
 ```
 
-**Update installed Toolbox to latest**
+---
+
+### Update existing installation to latest
+
+#### Linux / macOS
 
 ```bash
-# Linux / macOS
 curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash -s -- --update
 ```
 
+#### Windows (PowerShell)
+
 ```powershell
-# Windows (PowerShell)
-& ([ScriptBlock]::Create((iwr -useb https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) -Update
+& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) --update
 ```
 
-Optional install flags:
+---
 
-- Linux/macOS: `curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash -s -- --version vX.Y.Z --install-dir /custom/bin`
-- Windows: `& ([ScriptBlock]::Create((iwr -useb https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) -Version vX.Y.Z -InstallDir C:\tools\bin -AddToPath`
+### Uninstall
+
+#### Linux / macOS
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash -s -- --uninstall
+```
+
+#### Windows (PowerShell)
+
+```powershell
+& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) --uninstall
+```
+
+---
+
+### Install a specific version
+
+#### Linux / macOS
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash -s -- --version vX.Y.Z
+```
+
+#### Windows (PowerShell)
+
+```powershell
+& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) --version vX.Y.Z
+```
+
+---
+
+### Install to a custom directory
+
+#### Linux / macOS
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.sh | bash -s -- --install-dir /custom/bin
+```
+
+#### Windows (PowerShell)
+
+```powershell
+& ([ScriptBlock]::Create((Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/gfmois/toolbox/main/scripts/install-toolbox.ps1).Content)) --install-dir "C:\tools\bin"
+```
 
 ---
 
@@ -102,6 +155,7 @@ toolbox plugin list
 
 # 4) Execute
 toolbox my-plugin
+
 # or namespaced
 toolbox dev my-plugin
 ```
