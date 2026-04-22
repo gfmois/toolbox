@@ -1,17 +1,22 @@
+[CmdletBinding()]
+param(
+    [string]$Version = "latest",
+    [string]$InstallDir = "",
+    [switch]$Update,
+    [switch]$Uninstall,
+    [switch]$Help,
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$RemainingArgs
+)
+
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 $Repo = "gfmois/toolbox"
 $AppName = "toolbox"
 
-$Version = "latest"
-$InstallDir = ""
-$Update = $false
-$Uninstall = $false
-$Help = $false
-
-$script:VersionProvided = $false
-$script:InstallDirProvided = $false
+$script:VersionProvided = $PSBoundParameters.ContainsKey("Version")
+$script:InstallDirProvided = $PSBoundParameters.ContainsKey("InstallDir")
 
 function Show-Usage {
     @"
@@ -19,8 +24,8 @@ Install Toolbox from GitHub releases.
 
 Usage:
   install-toolbox.ps1 [-Version <version|latest>] [-InstallDir <dir>] [-Update]
-  install-toolbox.ps1 [--version <version|latest>] [--install-dir <dir>] [--update]
   install-toolbox.ps1 [-Uninstall]
+  install-toolbox.ps1 [--version <version|latest>] [--install-dir <dir>] [--update]
   install-toolbox.ps1 [--uninstall]
 
 Examples:
@@ -133,7 +138,7 @@ function Test-VersionValue([string]$Value) {
     }
 }
 
-function Parse-Arguments {
+function Parse-GnuStyleArgs {
     param([string[]]$Arguments)
 
     $i = 0
@@ -141,27 +146,27 @@ function Parse-Arguments {
         $arg = $Arguments[$i]
 
         switch -Regex ($arg) {
-            '^(-h|--help)$' {
+            '^--help$' {
                 $script:Help = $true
                 $i++
                 continue
             }
 
-            '^(-Update|--update|-update)$' {
+            '^--update$' {
                 $script:Update = $true
                 $i++
                 continue
             }
 
-            '^(-Uninstall|--uninstall|-uninstall)$' {
+            '^--uninstall$' {
                 $script:Uninstall = $true
                 $i++
                 continue
             }
 
-            '^(-Version|--version|-version)$' {
+            '^--version$' {
                 if ($i + 1 -ge $Arguments.Count) {
-                    Fail "Missing value for $arg."
+                    Fail "Missing value for --version."
                 }
 
                 $script:Version = $Arguments[$i + 1]
@@ -170,9 +175,9 @@ function Parse-Arguments {
                 continue
             }
 
-            '^(-InstallDir|--install-dir|-install-dir)$' {
+            '^--install-dir$' {
                 if ($i + 1 -ge $Arguments.Count) {
-                    Fail "Missing value for $arg."
+                    Fail "Missing value for --install-dir."
                 }
 
                 $script:InstallDir = $Arguments[$i + 1]
@@ -181,15 +186,15 @@ function Parse-Arguments {
                 continue
             }
 
-            '^(-Version|--version|-version)=(.+)$' {
-                $script:Version = $Matches[2]
+            '^--version=(.+)$' {
+                $script:Version = $Matches[1]
                 $script:VersionProvided = $true
                 $i++
                 continue
             }
 
-            '^(-InstallDir|--install-dir|-install-dir)=(.+)$' {
-                $script:InstallDir = $Matches[2]
+            '^--install-dir=(.+)$' {
+                $script:InstallDir = $Matches[1]
                 $script:InstallDirProvided = $true
                 $i++
                 continue
@@ -202,7 +207,9 @@ function Parse-Arguments {
     }
 }
 
-Parse-Arguments -Arguments $args
+if ($RemainingArgs.Count -gt 0) {
+    Parse-GnuStyleArgs -Arguments $RemainingArgs
+}
 
 if ($Help) {
     Show-Usage
@@ -298,7 +305,11 @@ $null = New-Item -ItemType Directory -Path $tempRoot -Force
 try {
     $archivePath = Join-Path $tempRoot $assetName
 
+    Write-Host "Resolved tag: $tag"
+    Write-Host "Resolved arch: $arch"
+    Write-Host "Asset name: $assetName"
     Write-Host "Downloading $downloadUrl"
+
     try {
         Invoke-WebRequest -Uri $downloadUrl -OutFile $archivePath
     }
