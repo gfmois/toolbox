@@ -207,7 +207,7 @@ function Parse-GnuStyleArgs {
     }
 }
 
-if ($RemainingArgs.Count -gt 0) {
+if ($RemainingArgs -and $RemainingArgs.Count -gt 0) {
     Parse-GnuStyleArgs -Arguments $RemainingArgs
 }
 
