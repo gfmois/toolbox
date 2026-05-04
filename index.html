@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toolbox — Documentación</title>
+  <meta name="description" content="Toolbox: CLI interna con plugins desde un único binario." />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #5b6478;
+      --accent: #2563eb;
+      --border: #e6e9f0;
+      --code-bg: #0b1220;
+      --code-text: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      padding: 64px 20px 32px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 3vw + 1rem, 3rem);
+      letter-spacing: -0.02em;
+    }
+    header p {
+      margin: 0 auto;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px 64px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+    h2 {
+      margin-top: 40px;
+      font-size: 1.6rem;
+    }
+    h3 {
+      margin-top: 0;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 16px;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px 20px 48px;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="tag">Toolbox CLI</div>
+    <h1>Ship and run internal CLI products as plugins — from a single binary</h1>
+    <p>
+      <strong>Toolbox</strong> es un repositorio para empaquetar y distribuir productos internos
+      de línea de comandos como <em>plugins</em> dentro de un único binario. Está pensado para simplificar
+      el despliegue, centralizar actualizaciones y permitir que nuevos comandos se agreguen sin fricción.
+    </p>
+  </header>
+
+  <main class="container">
+    <section class="grid">
+      <article class="card">
+        <h3>¿Qué es?</h3>
+        <p>
+          Una plataforma CLI modular que carga funcionalidades como plugins. Cada plugin expone comandos
+          específicos, y el binario principal actúa como el punto de entrada unificado.
+        </p>
+      </article>
+      <article class="card">
+        <h3>¿Cómo funciona?</h3>
+        <p>
+          El binario central descubre plugins instalados, registra sus comandos y ejecuta la lógica
+          correspondiente. Esto permite versionar y publicar herramientas internas de manera consistente.
+        </p>
+      </article>
+      <article class="card">
+        <h3>¿Para quién es?</h3>
+        <p>
+          Equipos que necesitan distribuir múltiples utilidades internas sin mantener múltiples instaladores
+          o rutas de actualización independientes.
+        </p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Instalación</h2>
+      <p>
+        Asegúrate de tener permisos de acceso al repositorio y a los artefactos internos. Luego ejecuta
+        la instalación del binario principal y configura los plugins requeridos.
+      </p>
+      <pre><code># Ejemplo conceptual
+# 1) Instalar el binario principal
+# 2) Instalar plugins autorizados
+# 3) Verificar comandos disponibles
+
+toolbox --version
+toolbox plugins list</code></pre>
+    </section>
+
+    <section>
+      <h2>Actualizar</h2>
+      <p>
+        Las actualizaciones se realizan desde un único punto. Esto reduce la complejidad de mantener
+        varias herramientas en paralelo.
+      </p>
+      <pre><code># Actualiza el binario principal y plugins asociados
+
+toolbox self update
+toolbox plugins update --all</code></pre>
+    </section>
+
+    <section>
+      <h2>Uso básico</h2>
+      <div class="card">
+        <p>Ejemplos típicos de interacción con la CLI:</p>
+        <pre><code># Ver ayuda general
+toolbox help
+
+# Ejecutar un comando de un plugin
+# (el nombre del plugin y comando pueden variar)
+toolbox <plugin> <command> [args]
+
+# Ver comandos disponibles
+toolbox list</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Arquitectura (alto nivel)</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Core</h3>
+          <p>Orquesta la carga de plugins, el registro de comandos y la ejecución.</p>
+        </article>
+        <article class="card">
+          <h3>Plugins</h3>
+          <p>Paquetes independientes que aportan comandos y funcionalidades específicas.</p>
+        </article>
+        <article class="card">
+          <h3>Distribución</h3>
+          <p>Un único binario simplifica el despliegue y el control de versiones.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Buenas prácticas</h2>
+      <ul>
+        <li>Versiona plugins de forma semántica para facilitar compatibilidad.</li>
+        <li>Documenta cada comando con ejemplos claros y resultados esperados.</li>
+        <li>Mantén el core estable y enfoca cambios frecuentes en los plugins.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Soporte</h2>
+      <p>
+        Para solicitudes o errores, abre un issue en el repositorio o contacta al equipo propietario.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Repositorio: <a href="https://github.com/gfmois/toolbox">gfmois/toolbox</a></p>
+    <p>Última actualización: 2026-05-04</p>
+  </footer>
+</body>
+</html>
