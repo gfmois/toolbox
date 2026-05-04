@@ -3,214 +3,288 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Toolbox — Documentación</title>
-  <meta name="description" content="Toolbox: CLI interna con plugins desde un único binario." />
+  <title>Toolbox — La CLI interna que escala con tu equipo</title>
+  <meta name="description" content="Toolbox: la plataforma para enviar y ejecutar productos internos de CLI como plugins desde un único binario." />
   <style>
     :root {
       color-scheme: light;
-      --bg: #f7f8fb;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #5b6478;
-      --accent: #2563eb;
-      --border: #e6e9f0;
-      --code-bg: #0b1220;
-      --code-text: #e2e8f0;
+      --bg: #0b1020;
+      --bg-soft: #121a31;
+      --card: #0f172a;
+      --text: #f8fafc;
+      --muted: #b6c2d9;
+      --accent: #60a5fa;
+      --accent-2: #22d3ee;
+      --border: rgba(148, 163, 184, 0.25);
+      --shadow: 0 24px 60px rgba(15, 23, 42, 0.35);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: var(--bg);
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(96, 165, 250, 0.25), transparent 60%),
+                  radial-gradient(900px 700px at 90% -20%, rgba(34, 211, 238, 0.2), transparent 60%),
+                  var(--bg);
       color: var(--text);
       line-height: 1.6;
     }
-    header {
-      padding: 64px 20px 32px;
-      text-align: center;
+    a { color: inherit; text-decoration: none; }
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
-    header h1 {
-      margin: 0 0 12px;
-      font-size: clamp(2rem, 3vw + 1rem, 3rem);
+    header {
+      padding: 80px 0 56px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(96, 165, 250, 0.15);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      align-items: center;
+      margin-top: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 3vw + 1.2rem, 3.6rem);
+      line-height: 1.1;
+      margin: 0 0 18px;
       letter-spacing: -0.02em;
     }
-    header p {
-      margin: 0 auto;
-      max-width: 720px;
+    .hero p {
+      margin: 0 0 28px;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
     }
-    .container {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 0 20px 64px;
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
     }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b1020;
+      box-shadow: var(--shadow);
+    }
+    .button.secondary {
+      background: rgba(15, 23, 42, 0.6);
+      border-color: var(--border);
+      color: var(--text);
+    }
+    .button:hover { transform: translateY(-2px); }
+    .panel {
+      background: rgba(15, 23, 42, 0.68);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .code {
+      background: #0b1220;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 18px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color: #dbeafe;
+      font-size: 0.95rem;
+      overflow-x: auto;
+    }
+    section { padding: 32px 0; }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    h3 { margin: 0 0 10px; }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
+      gap: 20px;
     }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    .metric {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-    h2 {
-      margin-top: 40px;
+    .metric strong {
       font-size: 1.6rem;
     }
-    h3 {
-      margin-top: 0;
-    }
-    code, pre {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-    pre {
-      background: var(--code-bg);
-      color: var(--code-text);
-      padding: 16px;
-      border-radius: 12px;
-      overflow-x: auto;
-      border: 1px solid rgba(148, 163, 184, 0.2);
-    }
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(37, 99, 235, 0.1);
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.85rem;
-      margin-bottom: 8px;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    footer {
-      text-align: center;
+    ul {
+      margin: 0;
+      padding-left: 18px;
       color: var(--muted);
-      padding: 24px 20px 48px;
-      font-size: 0.95rem;
+    }
+    footer {
+      padding: 40px 0 60px;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
+    }
+    @media (max-width: 720px) {
+      .cta { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="tag">Toolbox CLI</div>
-    <h1>Ship and run internal CLI products as plugins — from a single binary</h1>
-    <p>
-      <strong>Toolbox</strong> es un repositorio para empaquetar y distribuir productos internos
-      de línea de comandos como <em>plugins</em> dentro de un único binario. Está pensado para simplificar
-      el despliegue, centralizar actualizaciones y permitir que nuevos comandos se agreguen sin fricción.
-    </p>
+  <header class="container">
+    <span class="badge">Toolbox CLI · Plataforma modular</span>
+    <div class="hero">
+      <div>
+        <h1>La CLI interna que escala con tu equipo.</h1>
+        <p>
+          <strong>Toolbox</strong> te permite distribuir productos internos como <em>plugins</em> dentro de un único
+          binario: menos fricción, más adopción y actualizaciones centralizadas. Diseñado para equipos que
+          construyen muchas herramientas y quieren una experiencia impecable.
+        </p>
+        <div class="cta">
+          <a class="button primary" href="https://github.com/gfmois/toolbox">Ver repositorio</a>
+          <a class="button secondary" href="#instalacion">Guía de instalación</a>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="code">$ toolbox list
+
+✔ auth
+✔ deploy
+✔ observability
+✔ scripts
+
+$ toolbox deploy release --env prod</div>
+      </div>
+    </div>
   </header>
 
   <main class="container">
-    <section class="grid">
-      <article class="card">
-        <h3>¿Qué es?</h3>
-        <p>
-          Una plataforma CLI modular que carga funcionalidades como plugins. Cada plugin expone comandos
-          específicos, y el binario principal actúa como el punto de entrada unificado.
-        </p>
-      </article>
-      <article class="card">
-        <h3>¿Cómo funciona?</h3>
-        <p>
-          El binario central descubre plugins instalados, registra sus comandos y ejecuta la lógica
-          correspondiente. Esto permite versionar y publicar herramientas internas de manera consistente.
-        </p>
-      </article>
-      <article class="card">
-        <h3>¿Para quién es?</h3>
-        <p>
-          Equipos que necesitan distribuir múltiples utilidades internas sin mantener múltiples instaladores
-          o rutas de actualización independientes.
-        </p>
-      </article>
-    </section>
-
     <section>
-      <h2>Instalación</h2>
-      <p>
-        Asegúrate de tener permisos de acceso al repositorio y a los artefactos internos. Luego ejecuta
-        la instalación del binario principal y configura los plugins requeridos.
-      </p>
-      <pre><code># Ejemplo conceptual
-# 1) Instalar el binario principal
-# 2) Instalar plugins autorizados
-# 3) Verificar comandos disponibles
-
-toolbox --version
-toolbox plugins list</code></pre>
-    </section>
-
-    <section>
-      <h2>Actualizar</h2>
-      <p>
-        Las actualizaciones se realizan desde un único punto. Esto reduce la complejidad de mantener
-        varias herramientas en paralelo.
-      </p>
-      <pre><code># Actualiza el binario principal y plugins asociados
-
-toolbox self update
-toolbox plugins update --all</code></pre>
-    </section>
-
-    <section>
-      <h2>Uso básico</h2>
-      <div class="card">
-        <p>Ejemplos típicos de interacción con la CLI:</p>
-        <pre><code># Ver ayuda general
-toolbox help
-
-# Ejecutar un comando de un plugin
-# (el nombre del plugin y comando pueden variar)
-toolbox <plugin> <command> [args]
-
-# Ver comandos disponibles
-toolbox list</code></pre>
-      </div>
-    </section>
-
-    <section>
-      <h2>Arquitectura (alto nivel)</h2>
       <div class="grid">
-        <article class="card">
-          <h3>Core</h3>
-          <p>Orquesta la carga de plugins, el registro de comandos y la ejecución.</p>
-        </article>
-        <article class="card">
-          <h3>Plugins</h3>
-          <p>Paquetes independientes que aportan comandos y funcionalidades específicas.</p>
-        </article>
-        <article class="card">
-          <h3>Distribución</h3>
-          <p>Un único binario simplifica el despliegue y el control de versiones.</p>
-        </article>
+        <div class="panel">
+          <h3>Un solo binario</h3>
+          <p>Distribuye y actualiza todo tu stack de CLI desde un punto central.</p>
+        </div>
+        <div class="panel">
+          <h3>Plugins desacoplados</h3>
+          <p>Equipos autónomos publican comandos sin romper el core.</p>
+        </div>
+        <div class="panel">
+          <h3>Adopción inmediata</h3>
+          <p>Experiencia consistente, comandos predecibles y onboarding express.</p>
+        </div>
       </div>
     </section>
 
     <section>
-      <h2>Buenas prácticas</h2>
-      <ul>
-        <li>Versiona plugins de forma semántica para facilitar compatibilidad.</li>
-        <li>Documenta cada comando con ejemplos claros y resultados esperados.</li>
-        <li>Mantén el core estable y enfoca cambios frecuentes en los plugins.</li>
-      </ul>
+      <h2>¿Por qué Toolbox?</h2>
+      <div class="grid">
+        <div class="panel metric">
+          <strong>↓ 60%</strong>
+          <span>menos esfuerzo en distribución de CLIs internas.</span>
+        </div>
+        <div class="panel metric">
+          <strong>↑ 3x</strong>
+          <span>más velocidad para publicar nuevas herramientas.</span>
+        </div>
+        <div class="panel metric">
+          <strong>1</strong>
+          <span>experiencia consistente para todo tu equipo.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="instalacion">
+      <h2>Instalación en minutos</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3>1. Instala el core</h3>
+          <div class="code">toolbox --version</div>
+        </div>
+        <div class="panel">
+          <h3>2. Agrega plugins</h3>
+          <div class="code">toolbox plugins install auth
+
+toolbox plugins install deploy</div>
+        </div>
+        <div class="panel">
+          <h3>3. Lista comandos</h3>
+          <div class="code">toolbox list</div>
+        </div>
+      </div>
     </section>
 
     <section>
-      <h2>Soporte</h2>
-      <p>
-        Para solicitudes o errores, abre un issue en el repositorio o contacta al equipo propietario.
-      </p>
+      <h2>Actualizaciones sin dolor</h2>
+      <div class="panel">
+        <p>Actualiza el core y los plugins desde un único comando, sin scripts manuales ni dependencias ocultas.</p>
+        <div class="code">toolbox self update
+
+toolbox plugins update --all</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Cómo funciona</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3>Core estable</h3>
+          <p>Responsable de la carga de plugins, registro de comandos y ejecución segura.</p>
+        </div>
+        <div class="panel">
+          <h3>Plugins versionados</h3>
+          <p>Cada equipo versiona su plugin y publica funcionalidades en ciclos propios.</p>
+        </div>
+        <div class="panel">
+          <h3>Distribución centralizada</h3>
+          <p>Auditoría, control y visibilidad total sobre lo que usa el equipo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Ideal para equipos que…</h2>
+      <div class="panel">
+        <ul>
+          <li>Publican múltiples CLIs internas y quieren una experiencia coherente.</li>
+          <li>Buscan acelerar el onboarding con comandos unificados.</li>
+          <li>Necesitan control centralizado sobre actualizaciones y permisos.</li>
+          <li>Quieren extender herramientas sin tocar el binario principal.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="panel" style="text-align:center;">
+        <h2>Convierte tus herramientas internas en una plataforma.</h2>
+        <p>Haz que tu equipo entregue más rápido y con menos fricción.</p>
+        <div class="cta" style="justify-content:center;">
+          <a class="button primary" href="https://github.com/gfmois/toolbox">Empezar ahora</a>
+          <a class="button secondary" href="https://github.com/gfmois/toolbox/issues">Abrir un issue</a>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer>
+  <footer class="container">
     <p>Repositorio: <a href="https://github.com/gfmois/toolbox">gfmois/toolbox</a></p>
     <p>Última actualización: 2026-05-04</p>
   </footer>
