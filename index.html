@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Toolbox — La CLI interna que escala con tu equipo</title>
-  <meta name="description" content="Toolbox: la plataforma para enviar y ejecutar productos internos de CLI como plugins desde un único binario." />
+  <title>Toolbox — The internal CLI platform that scales</title>
+  <meta name="description" content="Toolbox: ship and run internal CLI products as plugins from a single binary." />
   <style>
     :root {
       color-scheme: light;
@@ -34,8 +34,12 @@
       margin: 0 auto;
       padding: 0 24px;
     }
-    header {
-      padding: 80px 0 56px;
+    header { padding: 80px 0 56px; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
     }
     .badge {
       display: inline-flex;
@@ -48,6 +52,26 @@
       color: var(--accent);
       font-weight: 600;
       font-size: 0.9rem;
+    }
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.6);
+    }
+    .lang-toggle button {
+      background: transparent;
+      color: var(--muted);
+      border: none;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .lang-toggle button.active {
+      color: #0b1020;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
     }
     .hero {
       display: grid;
@@ -113,10 +137,7 @@
       overflow-x: auto;
     }
     section { padding: 32px 0; }
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 16px;
-    }
+    h2 { font-size: 2rem; margin-bottom: 16px; }
     h3 { margin: 0 0 10px; }
     .grid {
       display: grid;
@@ -128,31 +149,60 @@
       flex-direction: column;
       gap: 6px;
     }
-    .metric strong {
-      font-size: 1.6rem;
-    }
-    ul {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-    }
+    .metric strong { font-size: 1.6rem; }
+    ul { margin: 0; padding-left: 18px; color: var(--muted); }
     footer {
       padding: 40px 0 60px;
       color: var(--muted);
       text-align: center;
       border-top: 1px solid rgba(148, 163, 184, 0.15);
     }
+    [data-lang] { display: none; }
+    [data-lang].active { display: block; }
     @media (max-width: 720px) {
       .cta { flex-direction: column; align-items: stretch; }
+      .topbar { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
   <header class="container">
-    <span class="badge">Toolbox CLI · Plataforma modular</span>
-    <div class="hero">
+    <div class="topbar">
+      <span class="badge">Toolbox CLI · Modular platform</span>
+      <div class="lang-toggle" role="tablist" aria-label="Language">
+        <button type="button" data-lang-button="en" class="active" aria-selected="true">EN</button>
+        <button type="button" data-lang-button="es" aria-selected="false">ES</button>
+      </div>
+    </div>
+
+    <div class="hero" data-lang="en" class="active">
       <div>
-        <h1>La CLI interna que escala con tu equipo.</h1>
+        <h1>The internal CLI platform that scales with your team.</h1>
+        <p>
+          <strong>Toolbox</strong> lets you ship internal CLI products as <em>plugins</em> inside a single binary.
+          Less friction, higher adoption, and centralized updates. Built for teams shipping lots of tooling
+          with a polished developer experience.
+        </p>
+        <div class="cta">
+          <a class="button primary" href="https://github.com/gfmois/toolbox">Open repository</a>
+          <a class="button secondary" href="#install">Install guide</a>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="code">$ toolbox list
+
+✔ auth
+✔ deploy
+✔ observability
+✔ scripts
+
+$ toolbox deploy release --env prod</div>
+      </div>
+    </div>
+
+    <div class="hero" data-lang="es">
+      <div>
+        <h1>La plataforma de CLI interna que escala con tu equipo.</h1>
         <p>
           <strong>Toolbox</strong> te permite distribuir productos internos como <em>plugins</em> dentro de un único
           binario: menos fricción, más adopción y actualizaciones centralizadas. Diseñado para equipos que
@@ -177,7 +227,24 @@ $ toolbox deploy release --env prod</div>
   </header>
 
   <main class="container">
-    <section>
+    <section data-lang="en" class="active">
+      <div class="grid">
+        <div class="panel">
+          <h3>One binary</h3>
+          <p>Distribute and update every internal CLI from a single control point.</p>
+        </div>
+        <div class="panel">
+          <h3>Decoupled plugins</h3>
+          <p>Autonomous teams ship commands without touching the core.</p>
+        </div>
+        <div class="panel">
+          <h3>Instant adoption</h3>
+          <p>Consistent UX, predictable commands, fast onboarding.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-lang="es">
       <div class="grid">
         <div class="panel">
           <h3>Un solo binario</h3>
@@ -194,7 +261,25 @@ $ toolbox deploy release --env prod</div>
       </div>
     </section>
 
-    <section>
+    <section data-lang="en">
+      <h2>Why Toolbox?</h2>
+      <div class="grid">
+        <div class="panel metric">
+          <strong>↓ 60%</strong>
+          <span>less effort distributing internal CLIs.</span>
+        </div>
+        <div class="panel metric">
+          <strong>↑ 3x</strong>
+          <span>faster shipping for new tools.</span>
+        </div>
+        <div class="panel metric">
+          <strong>1</strong>
+          <span>consistent experience for every team.</span>
+        </div>
+      </div>
+    </section>
+
+    <section data-lang="es">
       <h2>¿Por qué Toolbox?</h2>
       <div class="grid">
         <div class="panel metric">
@@ -212,7 +297,27 @@ $ toolbox deploy release --env prod</div>
       </div>
     </section>
 
-    <section id="instalacion">
+    <section id="install" data-lang="en">
+      <h2>Install in minutes</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3>1. Install the core</h3>
+          <div class="code">toolbox --version</div>
+        </div>
+        <div class="panel">
+          <h3>2. Add plugins</h3>
+          <div class="code">toolbox plugins install auth
+
+toolbox plugins install deploy</div>
+        </div>
+        <div class="panel">
+          <h3>3. List commands</h3>
+          <div class="code">toolbox list</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="instalacion" data-lang="es">
       <h2>Instalación en minutos</h2>
       <div class="grid">
         <div class="panel">
@@ -232,7 +337,17 @@ toolbox plugins install deploy</div>
       </div>
     </section>
 
-    <section>
+    <section data-lang="en">
+      <h2>Updates without pain</h2>
+      <div class="panel">
+        <p>Update the core and every plugin from a single command. No manual scripts, no hidden dependencies.</p>
+        <div class="code">toolbox self update
+
+toolbox plugins update --all</div>
+      </div>
+    </section>
+
+    <section data-lang="es">
       <h2>Actualizaciones sin dolor</h2>
       <div class="panel">
         <p>Actualiza el core y los plugins desde un único comando, sin scripts manuales ni dependencias ocultas.</p>
@@ -242,7 +357,25 @@ toolbox plugins update --all</div>
       </div>
     </section>
 
-    <section>
+    <section data-lang="en">
+      <h2>How it works</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3>Stable core</h3>
+          <p>Responsible for plugin loading, command registration, and safe execution.</p>
+        </div>
+        <div class="panel">
+          <h3>Versioned plugins</h3>
+          <p>Each team ships features on their own cadence without affecting others.</p>
+        </div>
+        <div class="panel">
+          <h3>Centralized delivery</h3>
+          <p>Visibility, governance, and auditability across every internal tool.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-lang="es">
       <h2>Cómo funciona</h2>
       <div class="grid">
         <div class="panel">
@@ -260,7 +393,19 @@ toolbox plugins update --all</div>
       </div>
     </section>
 
-    <section>
+    <section data-lang="en">
+      <h2>Perfect for teams that…</h2>
+      <div class="panel">
+        <ul>
+          <li>Ship multiple internal CLIs and want a consistent experience.</li>
+          <li>Need faster onboarding with unified commands.</li>
+          <li>Require centralized control over updates and permissions.</li>
+          <li>Want to extend tools without touching the main binary.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section data-lang="es">
       <h2>Ideal para equipos que…</h2>
       <div class="panel">
         <ul>
@@ -272,7 +417,18 @@ toolbox plugins update --all</div>
       </div>
     </section>
 
-    <section>
+    <section data-lang="en">
+      <div class="panel" style="text-align:center;">
+        <h2>Turn internal tools into a platform.</h2>
+        <p>Let your team ship faster with less friction.</p>
+        <div class="cta" style="justify-content:center;">
+          <a class="button primary" href="https://github.com/gfmois/toolbox">Get started</a>
+          <a class="button secondary" href="https://github.com/gfmois/toolbox/issues">Open an issue</a>
+        </div>
+      </div>
+    </section>
+
+    <section data-lang="es">
       <div class="panel" style="text-align:center;">
         <h2>Convierte tus herramientas internas en una plataforma.</h2>
         <p>Haz que tu equipo entregue más rápido y con menos fricción.</p>
@@ -285,8 +441,36 @@ toolbox plugins update --all</div>
   </main>
 
   <footer class="container">
-    <p>Repositorio: <a href="https://github.com/gfmois/toolbox">gfmois/toolbox</a></p>
-    <p>Última actualización: 2026-05-04</p>
+    <div data-lang="en" class="active">
+      <p>Repository: <a href="https://github.com/gfmois/toolbox">gfmois/toolbox</a></p>
+      <p>Last updated: 2026-05-04</p>
+    </div>
+    <div data-lang="es">
+      <p>Repositorio: <a href="https://github.com/gfmois/toolbox">gfmois/toolbox</a></p>
+      <p>Última actualización: 2026-05-04</p>
+    </div>
   </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('[data-lang-button]');
+    const sections = document.querySelectorAll('[data-lang]');
+
+    const setLanguage = (lang) => {
+      buttons.forEach((btn) => {
+        const active = btn.getAttribute('data-lang-button') === lang;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      sections.forEach((section) => {
+        section.classList.toggle('active', section.getAttribute('data-lang') === lang);
+      });
+      document.documentElement.lang = lang;
+      window.location.hash = lang === 'es' ? '#instalacion' : '#install';
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang-button')));
+    });
+  </script>
 </body>
 </html>
