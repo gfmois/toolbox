@@ -175,7 +175,7 @@
       </div>
     </div>
 
-    <div class="hero" data-lang="en" class="active">
+    <div class="hero active" data-lang="en">
       <div>
         <h1>The internal CLI platform that scales with your team.</h1>
         <p>
@@ -465,12 +465,13 @@ toolbox plugins update --all</div>
         section.classList.toggle('active', section.getAttribute('data-lang') === lang);
       });
       document.documentElement.lang = lang;
-      window.location.hash = lang === 'es' ? '#instalacion' : '#install';
     };
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang-button')));
     });
+
+    setLanguage('en');
   </script>
 </body>
 </html>
